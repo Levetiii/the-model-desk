@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A live, source-linked reader for AI news.">
+  <meta name="theme-color" content="#f7f6f0">
+  <title>The Model Desk</title>
+  <link rel="preload" href="/spectral-semibold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <script src="/theme.js?v=2"></script>
+  <link rel="stylesheet" href="/style.css?v=factcheck1">
+  <script type="module" src="/app.js?v=factcheck1"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to stories</a>
+  <header class="masthead">
+    <div class="masthead-inner">
+      <a class="wordmark" href="/" aria-label="The Model Desk home">
+        <span class="brand-mark" aria-hidden="true">M</span>
+        <span>The Model Desk</span>
+      </a>
+      <nav class="main-nav" aria-label="News views">
+        <button type="button" data-view="today" aria-current="page">Today</button>
+        <button type="button" data-view="latest">Latest</button>
+        <button type="button" data-view="saved">Saved</button>
+      </nav>
+      <form id="search-form" class="mast-search" role="search">
+        <label class="sr-only" for="search-input">Search stories</label>
+        <svg class="search-mark" aria-hidden="true" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="5.8"/><path d="m15.4 15.4 4.3 4.3"/></svg>
+        <input id="search-input" type="search" placeholder="Search stories…" autocomplete="off" maxlength="100" enterkeyhint="search">
+        <button type="button" id="search-clear" class="icon-button" aria-label="Clear search" hidden>
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg>
+        </button>
+      </form>
+      <div class="mast-actions">
+        <label class="theme-picker" title="Reading theme">
+          <span class="sr-only">Reading theme</span>
+          <svg class="theme-mark" aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.5"/><path d="M12 4.5v15"/></svg>
+          <select id="theme-select">
+            <option value="system">System</option>
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+            <option value="sepia">Sepia</option>
+            <option value="forest">Forest</option>
+            <option value="rose">Rose</option>
+            <option value="midnight">Midnight</option>
+            <option value="contrast">Contrast</option>
+          </select>
+        </label>
+        <button type="button" id="model-settings" class="mast-button" aria-label="Model settings" title="Model settings">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 7h14M5 12h14M5 17h14M9 5v4m6 1v4m-5 1v4"/></svg>
+          <span>Models</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <main id="main" class="page" tabindex="-1">
+    <section class="edition" aria-labelledby="edition-title">
+      <div class="edition-copy">
+        <h1 id="edition-title">Today’s edition</h1>
+        <p id="edition-deck" class="edition-deck">AI news ranked by impact, urgency, and quality of evidence.</p>
+      </div>
+      <div class="edition-meta">
+        <time id="edition-date"></time>
+        <div class="edition-actions">
+          <span id="feed-state" class="feed-state" data-tone="neutral" role="status"><i></i><span>Connecting to feeds</span></span>
+          <button type="button" id="refresh" class="icon-button refresh" aria-label="Refresh news" title="Refresh news">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M19.5 9a7.5 7.5 0 1 0 .2 5M19.5 4.8V9h-4.2"/></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+    <button type="button" id="mobile-filters" class="mobile-filters" aria-expanded="false" aria-controls="filter-section">
+      <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 6h16M7 12h10m-7 6h4"/></svg>
+      <span>Topics</span>
+    </button>
+    <div class="desk">
+      <section class="feed" id="feed" aria-label="Stories" aria-busy="true">
+        <div class="loading" aria-hidden="true">
+          <div class="loading-line long"></div><div class="loading-line middle"></div><div class="loading-line short"></div>
+        </div>
+      </section>
+      <aside class="rail" aria-label="Topics and sources">
+        <section class="rail-section" id="filter-section">
+          <h2>Browse by topic</h2>
+          <div id="topics" class="topics"></div>
+        </section>
+        <section class="rail-section source-section">
+          <h2>On the wire</h2>
+          <div id="sources" class="sources"></div>
+          <button type="button" id="view-sources" class="text-button">View all sources <span aria-hidden="true">↗</span></button>
+        </section>
+      </aside>
+    </div>
+    <footer class="footer">
+      <span>The Model Desk</span>
+      <button type="button" class="text-button" data-sources>Feed sources</button>
+    </footer>
+  </main>
+  <dialog id="reader" class="reader" aria-labelledby="reader-heading">
+    <div class="reader-bar"><span id="reader-label">Story</span>
+      <button type="button" class="icon-button" data-close aria-label="Close reader" autofocus>
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <div id="reader-content" class="reader-content"></div>
+  </dialog>
+  <div id="announcement" class="sr-only" role="status"></div>
+  <noscript>Enable JavaScript to load the live news feed.</noscript>
+</body>
+</html>
