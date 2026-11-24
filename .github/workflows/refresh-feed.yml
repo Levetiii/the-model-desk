@@ -1,0 +1,32 @@
+name: Refresh The Model Desk
+on:
+  schedule:
+    - cron: '4,14,24,34,44,54 * * * *'
+  workflow_dispatch:
+
+permissions: {}
+concurrency:
+  group: model-desk-feed-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    if: github.repository == 'Levetiii/the-model-desk'
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Check the shared edition
+        env:
+          FEED_URL: https://model-desk-ai-reader.crazymindsxd.chatgpt.site/api/news
+        run: |
+          set -euo pipefail
+          response="$(curl --fail --silent --show-error --max-time 22 "$FEED_URL")"
+          for attempt in 1 2; do
+            if ! jq -e '.refreshPending == true' <<< "$response" > /dev/null; then
+              break
+            fi
+            sleep 8
+            response="$(curl --fail --silent --show-error --max-time 22 "$FEED_URL")"
+          done
+          jq -e '(.checkedAt | type == "string") and (.updatedAt == .checkedAt) and (.refreshPending == false)' <<< "$response" > /dev/null
+          jq '{checkedAt, updatedAt, stories: (.stories | length)}' <<< "$response"
